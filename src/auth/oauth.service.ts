@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-oauth2';
-console.log(process.env.OAUTH_CLIENT_ID,'process.env.OAUTH_CLIENT_ID');
+
 @Injectable()
 export class GoogleOAuthStrategy extends PassportStrategy(Strategy, 'google') {
   constructor() {
