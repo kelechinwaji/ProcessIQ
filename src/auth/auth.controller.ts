@@ -12,7 +12,9 @@ export class AuthController {
   @Get('callback')
   @UseGuards(AuthGuard('oauth2'))
   callback(@Req() req) {
-    // Handle the callback and return user info
-    return req.user;
+    const { accessToken, ...userData } = req.user;
+
+    // Return only non-sensitive data to the client
+    return { ...userData };
   }
 }
