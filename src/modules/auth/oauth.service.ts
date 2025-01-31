@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-oauth2';
-import { config } from '../config/config';
+import { config } from '../../config/config';
 import axios from 'axios';
 
 @Injectable()
