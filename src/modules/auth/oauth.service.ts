@@ -3,10 +3,11 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-oauth2';
 import { config } from '../../config/config';
 import axios from 'axios';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class GoogleOAuthStrategy extends PassportStrategy(Strategy, 'oauth2') {
-  constructor() {
+  constructor(private readonly userService: UserService) {
     super({
       authorizationURL: 'https://accounts.google.com/o/oauth2/auth',
       tokenURL: 'https://accounts.google.com/o/oauth2/token',
@@ -40,6 +41,16 @@ export class GoogleOAuthStrategy extends PassportStrategy(Strategy, 'oauth2') {
         email: data.email,
         photo: data.picture,
       };
+
+      let findUser = await this.userService.findByEmail(user.email);
+      if (!findUser) {
+        await this.userService.create({
+          id: data.id,
+          displayName: data.name,
+          email: data.email,
+          photo: data.picture,
+        });
+      }
 
       done(null, { accessToken, ...user });
     } catch (error) {
