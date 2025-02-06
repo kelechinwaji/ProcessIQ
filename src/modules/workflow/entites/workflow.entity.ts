@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { User } from '../../user/entities/user.entity';
 
 export enum WorkflowStatus {
   ACTIVE = 'active',
@@ -13,7 +14,7 @@ export class Workflow extends Document {
   id: string;
 
   @Prop({ required: true })
-  user: string;
+  user: User;
 
   @Prop({ required: true, unique: true })
   name: string;
